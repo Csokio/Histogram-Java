@@ -103,4 +103,36 @@ public class Histogram {
 
         return resultBuilder.toString();
     }
+
+
+    public Integer getMin() {
+        return histogram.isEmpty() ? null : Collections.min(histogram.values());
+    }
+
+    public Integer getMax() {
+        return histogram.isEmpty() ? null : Collections.max(histogram.values());
+    }
+
+    /**
+     * Normalize the values for better understanding.
+     * For every feature, the minimum value of that feature gets transformed into a 0,
+     * the maximum value gets transformed into a 100,
+     * and every other value gets transformed into a int between 0 and 100.
+     * The following formula applied to every ranges:
+     *      `V' = (V - min) * 100 / (max - min)`
+     */
+    public void normalizesValues() {
+        if (histogram.isEmpty()) {
+            return;
+        }
+        int max = Collections.max(histogram.values());
+        int min = Collections.min(histogram.values());
+
+        for (Range range : histogram.keySet()) {
+            int count = histogram.get(range);
+            int normalizedCount = (count - min) * 100 / (max - min);
+            histogram.put(range, normalizedCount);
+        }
+    }
+
 }
