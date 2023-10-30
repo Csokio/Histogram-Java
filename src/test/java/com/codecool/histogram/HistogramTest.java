@@ -35,6 +35,7 @@ public class HistogramTest {
         );
     }
 
+
     @Test
     public void testAllWordsInRange() {
         String text = "This is a test sentence.";
